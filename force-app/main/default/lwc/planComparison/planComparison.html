@@ -1,0 +1,72 @@
+<template>
+    <section class="slds-box slds-theme_default">
+        <div class="slds-p-horizontal_medium slds-p-top_medium" style="background-color: #FFF;">
+            <p class="slds-text-title_bold slds-p-bottom_small">Industry-specific AI Solutions for Payers.</p>
+            <p if:true={isShowErrorMessage}
+                class="slds-text-title_bold slds-text-color_destructive slds-p-bottom_small">
+                Please provide the credentials needed to connect to the environment hosting Virtical AI models.</p>
+            <p if:false={isShowErrorMessage} class="slds-p-bottom_small">Upload an incumbent plan document (Summary of
+                Benefits & Coverage) to compare against your plans.</p>
+        </div>
+
+        <div if:false={isShowErrorMessage} class="slds-is-relative">
+            <c-uploader loading={loading} onsetloading={setLoading} onsetdata={setData} studio-ids={studioIds}
+                title="Upload File" file-type="pdf" onfetch={uploadFile}></c-uploader>
+            <template if:true={loading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+        </div>
+
+        <template if:true={data.length}>
+            <table class="plans-wrapper slds-grid slds-p-vertical_x-large">
+                <template for:each={data} for:item="item">
+                    <tr key={item.name} class="plan" data-type={item.title}>
+                        <td class="card">
+                            <template if:true={item.name}>
+                                <div>
+                                    <p class="font-semibold slds-text-heading_medium">{item.name}</p>
+                                    <template if:true={item.title}>
+                                        <p class="font-semibold slds-text-title slds-m-top_xx-small">{item.title}</p>
+                                    </template>
+                                </div>
+                                <div>
+                                    <template if:true={item.recommendedPercent}>
+                                        <p class="price font-semibold">{item.recommendedPercent}%</p>
+                                    </template>
+                                    <button class="get-started-btn">Get started</button>
+                                </div>
+                            </template>
+                            <template if:true={item.Name}>
+                                <p class="font-semibold slds-text-heading_medium">{item.Name}</p>
+                                <div class="uploaded-sbc font-semibold">Uploaded Plan</div>
+                            </template>
+                        </td>
+                        <template for:each={item.benefits} for:item="benefit">
+                            <td class="plan-cell slds-grid slds-grid_vertical-align-center" key={benefit.key}>
+                                <div class="classification slds-is-relative slds-m-right_medium"
+                                    data-result={benefit.result}>
+                                    <div class="classification-icon">
+                                        <img src={checkSvg} alt="check-icon" width="17" height="17"
+                                            style="min-width: 17px;">
+                                        <img src={checkGreenSvg} alt="check-green-icon" width="17" height="17"
+                                            style="min-width: 17px;">
+                                        <img src={exclamationSvg} alt="exclamation-icon" width="17" height="17"
+                                            style="min-width: 17px;">
+                                    </div>
+                                    <div class="tooltip text-sm">
+                                        {benefit.result}
+                                        <span class="triangle"></span>
+                                    </div>
+                                </div>
+                                <span class="benefit-value">{benefit.value}</span>
+                            </td>
+                        </template>
+                        <td class="btn-wrapper slds-p-horizontal_small">
+                            <button class="get-started-btn">Get started</button>
+                        </td>
+                    </tr>
+                </template>
+            </table>
+        </template>
+    </section>
+</template>

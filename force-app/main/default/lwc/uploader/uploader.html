@@ -1,0 +1,15 @@
+<template>
+    <section class="section-wrapper">
+        <p class="section-title">{title}</p>
+        <div class="file-upload-wrapper" style={wrapperStyle} ondragenter={handleDragEnter}
+            ondragleave={handleDragLeave} ondragover={handleDragOver} ondragend={handleDragEnd} ondrop={handleDragDrop}
+            onclick={handleFileClick}>
+            <input type="file" accept={type} onchange={handleUploadFile} class="slds-hide" />
+            <p class="file-interaction-text">
+                Drag and drop files here or
+                <span class="file-selection-text"> choose file</span>
+            </p>
+            <em class="upload-info">( {description} )</em>
+        </div>
+    </section>
+</template>

@@ -1,0 +1,36 @@
+.section-wrapper {
+    width: 100%;
+    padding: 2rem 1rem;
+    background-color: #FFF;
+}
+
+.section-title {
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.file-upload-wrapper {
+    text-align: center;
+    padding: 1.75rem;
+    border-radius: 0.375rem;
+    transition: all;
+    cursor: pointer;
+    margin-top: 0.75rem;
+}
+
+.file-interaction-text {
+    color: #A0AEC0;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.file-selection-text {
+    color: #4299E1;
+}
+
+.upload-info {
+    color: #A0AEC0;
+    font-size: 0.875rem;
+    font-style: italic;
+}

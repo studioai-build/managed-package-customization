@@ -1,0 +1,178 @@
+/* Cards */
+.plans-wrapper {
+    background-color: #FFF;
+    overflow-x: scroll;
+}
+
+.plan:first-child .card {
+    visibility: hidden;
+}
+
+.plan[data-type="Anthem"] .card {
+    background-color: #E2DCF6;
+}
+
+.plan[data-type="UHC"] .card {
+    background-color: #F9EEDE;
+}
+
+.plan[data-type="Oxford"] .card {
+    background-color: #C4F1FB;
+}
+
+.plan {
+    display: flex;
+    flex-direction: column;
+}
+
+.plan-cell {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    min-height: 0;
+    padding: 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    margin: 0 0.75rem 1rem;
+    border-radius: 0.75rem;
+    background-color: #E2DCF6;
+    color: #121822;
+    min-width: 250px;
+    min-height: 250px;
+    height: 250px;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    font-size: 3rem;
+}
+
+.plan:first-child .btn-wrapper {
+    visibility: hidden;
+}
+
+.get-started-btn {
+    display: block;
+    margin-top: 0.75rem;
+    width: 100%;
+    padding: 0.75rem;
+    text-align: center;
+    background-color: #121822;
+    font-size: 0.85rem;
+    color: #fff;
+    border-radius: 0.5rem;
+    border: 1px solid transparent;
+    transition: all 0.3s;
+}
+
+.get-started-btn:hover {
+    background-color: #fff;
+    color: #121822;
+    border-color: #121822;
+}
+
+.uploaded-sbc {
+    display: block;
+    margin-top: auto;
+    width: 100%;
+    padding: 0.75rem;
+    text-align: center;
+    background-color: #fff;
+    font-size: 0.85rem;
+    color: #121822;
+    border-radius: 0.5rem;
+    border: 1px solid #121822;
+}
+
+.plan:not(:first-child) .benefit-value {
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+/** Utils **/
+.font-semibold {
+    font-weight: 600;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+/* Tooltip */
+.classification .classification-icon img {
+    display: none;
+}
+
+.classification[data-result="Exceptional Benefits"] .classification-icon img[alt="check-green-icon"],
+.classification[data-result="Comparable Benefits"] .classification-icon img[alt="check-icon"],
+.classification[data-result="Below-par Benefits"] .classification-icon img[alt="exclamation-icon"] {
+    display: block;
+}
+
+.classification .classification-icon:hover+.tooltip {
+    display: block;
+}
+
+.classification[data-result="Exceptional Benefits"] .tooltip {
+    color: #FFF;
+    background: #44BD8A;
+}
+
+.classification[data-result="Exceptional Benefits"] .tooltip .triangle {
+    background: #44BD8A;
+}
+
+.classification[data-result="Comparable Benefits"] .tooltip {
+    color: #44BD8A;
+    background: #FFF;
+}
+
+.classification[data-result="Comparable Benefits"] .tooltip .triangle {
+    background: #FFF;
+}
+
+.classification[data-result="Below-par Benefits"] .tooltip {
+    color: #FFF;
+    background: #FF8F13;
+    border: none;
+}
+
+.classification[data-result="Below-par Benefits"] .tooltip .triangle {
+    background: #FF8F13;
+    border-color: transparent;
+}
+
+.classification .tooltip {
+    position: absolute;
+    display: none;
+    top: -200%;
+    left: 60%;
+    width: max-content;
+    padding: 0.5rem 1rem;
+    border: 1px solid #44BD8A;
+    border-radius: 0.5rem;
+    transform: translate(-50%, -50%);
+}
+
+.triangle {
+    display: block;
+    position: absolute;
+    bottom: -0.5rem;
+    left: calc(50% - 10px);
+    width: 1rem;
+    height: 1rem;
+    border-bottom: 1px solid #44BD8A;
+    border-right: 1px solid #44BD8A;
+    border-radius: 0.1rem;
+    transform: rotate(45deg);
+    z-index: -1;
+}

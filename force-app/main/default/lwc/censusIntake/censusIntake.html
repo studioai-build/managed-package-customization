@@ -1,0 +1,107 @@
+<template>
+    <section class="section-wrapper slds-box slds-theme_default slds-is-relative">
+      <div class="slds-p-horizontal_medium slds-p-top_medium" style="background-color: #FFF;">
+        <p class="slds-text-title_bold slds-p-bottom_small">Industry-specific AI Solutions for Payers.</p>
+        <p if:true={isShowErrorMessage} class="slds-text-title_bold slds-text-color_destructive slds-p-bottom_small">
+          Please provide the credentials needed to connect to the environment hosting Virtical AI models.</p>
+        <p if:false={isShowErrorMessage} class="slds-p-bottom_small">Upload a census file to process prospect group’s
+          employee and dependent information.</p>
+      </div>
+  
+      <div if:false={isShowErrorMessage} class="slds-is-relative">
+        <c-uploader loading={loading} onsetloading={setLoading} onsetdata={setData} studio-ids={studioIds}
+          title="Upload census here" file-type="xlsx, .csv"
+          input-description="Maximum upload file size: 5MB. Only accepts the file extension: .xlsx, .csv"
+          onfetch={handleUploadFile}></c-uploader>
+        <template if:true={loading}>
+          <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </template>
+      </div>
+  
+      <template if:true={censusData.length}>
+        <template if:true={statistic.length}>
+          <div class="statistic-grid slds-grid slds-wrap slds-grid_align-spread slds-m-top_x-large">
+            <template for:each={statistic} for:item="item">
+              <div key={item} class="statistic-item">
+                <span class="text-normal slds-text-title_caps">{item.key}</span>
+                <span class="font-bold text-3xl leading-none">{item.value}</span>
+              </div>
+            </template>
+          </div>
+        </template>
+  
+        <div class="slds-m-top_xx-large">
+          <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-end slds-m-bottom_large">
+            <p class="text-normal font-medium">Census Details</p>
+            <button class="btn btn-primary" onclick={handleAddEmployee}>Add Employees</button>
+          </div>
+  
+          <table class="slds-table slds-table_fixed-layout slds-table_resizable-cols"
+            aria-labelledby="element-with-table-label other-element-with-table-label">
+            <thead>
+              <tr class="slds-line-height_reset">
+                <th class="" scope="col"></th>
+                <th class="" scope="col">Full Name</th>
+                <th class="" scope="col">Age</th>
+                <th class="" scope="col">Gender</th>
+                <th class="" scope="col">ZipCode</th>
+                <th class="" scope="col">Tobacco Use</th>
+                <th class="" scope="col">Relationship</th>
+                <th class="" scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <template for:each={censusData} for:item="item">
+                <tr key={item.id} class="slds-hint-parent">
+                  <th scope="row">{item.employeeId}</th>
+                  <td data-error={item.isNameError}>
+                    <input data-id={item.id} data-field="name" value={item.name} class="w-full"
+                      onkeyup={handleUpdateInfo}>
+                  </td>
+                  <td data-error={item.isAgeError}>
+                    <input data-id={item.id} data-field="age" value={item.age} class="w-full" onkeyup={handleUpdateInfo}>
+                  </td>
+                  <td data-error={item.isGenderError}>
+                    <lightning-combobox variant="label-hidden" name="progress" value={item.gender} options={genderOptions}
+                      onchange={handleUpdateInfo} data-id={item.id} data-field="gender"
+                      class="w-full"></lightning-combobox>
+                  </td>
+                  <td data-error={item.isZipCodeError}>
+                    <input data-id={item.id} data-field="zipCode" value={item.zipCode} class="w-full"
+                      onkeyup={handleUpdateInfo}>
+                  </td>
+                  <td data-error={item.isTobaccoUseError}>
+                    <lightning-combobox variant="label-hidden" name="progress" value={item.tobaccoUse}
+                      options={tobaccoUseOptions} onchange={handleUpdateInfo} data-id={item.id} data-field="tobaccoUse"
+                      class="w-full"></lightning-combobox>
+                  </td>
+                  <td data-error={item.isRelationshipToEmployeeError}>
+                    <lightning-combobox variant="label-hidden" name="progress" value={item.relationshipToEmployee}
+                      options={relationshipOptions} onchange={handleUpdateInfo} data-id={item.id}
+                      data-field="relationshipToEmployee" class="w-full"></lightning-combobox>
+                  </td>
+                  <td>
+                    <div class="slds-grid slds-grid_align-end gap-1">
+                      <template if:true={item.employeeId}>
+                        <div class="cursor-pointer" data-id={item.id} onclick={handleAddDependent}>
+                          <img src={addUserSvg} alt="add-user-icon" width="20px" height="20px" style="min-width: 20px;">
+                        </div>
+                      </template>
+                      <div class="cursor-pointer" data-employeeid={item.employeeId} data-id={item.id}
+                        onclick={handleRemoveDependent}>
+                        <img src={trashSvg} alt="trash-icon" width="20px" height="20px" style="min-width: 20px;">
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+  
+          <div class="slds-grid slds-grid_align-end slds-m-top_large">
+            <button class="btn btn-secondary" onclick={handleValidateData}>Validate Data</button>
+          </div>
+        </div>
+      </template>
+    </section>
+  </template>
